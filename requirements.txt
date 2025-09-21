@@ -1,12 +1,10 @@
-# essentials
-pandas>=2.1.0
-streamlit>=1.20.0
-matplotlib>=3.6.0
-scikit-learn>=1.2.0
-python-dotenv>=1.0.0
+streamlit==1.39.0
+pandas==2.2.3
+matplotlib==3.9.2
+scikit-learn==1.5.2
 
-# google libs (less strict to allow pip to choose compatible wheels)
-google-cloud-bigquery>=3.12.0
-google-cloud-bigquery-storage>=2.10.0
-db-dtypes>=1.0.0
+# Optional / add after basic success
+google-cloud-bigquery>=3.25.0
+google-cloud-bigquery-storage>=2.25.0
+db-dtypes>=1.2.0
 pyarrow>=11.0.0
