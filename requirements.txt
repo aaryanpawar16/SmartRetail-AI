@@ -1,5 +1,18 @@
-google-cloud-bigquery>=3.8.0
-pandas
-streamlit
-# BigFrames and Gemini SDKs (if available in your environment)
-# bigframes
+# Core Google Cloud
+google-cloud-bigquery==3.25.0
+google-cloud-bigquery-storage==2.25.0
+db-dtypes==1.2.0
+
+# Data handling
+pandas==2.2.3
+pyarrow==17.0.0
+
+# Visualization
+matplotlib==3.9.2
+streamlit==1.39.0
+
+# ML / NLP utils (for local TF-IDF similarity demo)
+scikit-learn==1.5.2
+
+# Optional but useful
+python-dotenv==1.0.1
