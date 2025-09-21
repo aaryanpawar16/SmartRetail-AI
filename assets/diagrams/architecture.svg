@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="650" viewBox="0 0 1100 650">
+  <rect x="12" y="12" width="1076" height="626" rx="12" fill="#f7fafc" stroke="#e2e8f0"></rect>
+  <text x="40" y="50" font-size="20" font-family="Arial" fill="#0f172a">SmartRetail AI — Architecture</text>
+
+  <!-- Public dataset -->
+  <rect x="40" y="90" width="240" height="120" rx="8" fill="#ffffff" stroke="#94a3b8"></rect>
+  <text x="60" y="120" font-size="14" font-family="Arial" fill="#0f172a">Public Dataset</text>
+  <text x="60" y="140" font-size="12" font-family="Arial" fill="#475569">e.g., BigQuery public tables</text>
+
+  <!-- BigQuery -->
+  <rect x="320" y="60" width="420" height="220" rx="12" fill="#ffffff" stroke="#0ea5a3"></rect>
+  <text x="360" y="90" font-size="16" font-family="Arial" fill="#064e3b">BigQuery (Data Warehouse)</text>
+  <text x="360" y="115" font-size="12" font-family="Arial" fill="#064e3b">Storage | SQL | BigQuery ML</text>
+  <text x="360" y="135" font-size="12" font-family="Arial" fill="#0f172a">AI.FORECAST, AI.GENERATE_TABLE, ML.GENERATE_TEXT</text>
+
+  <!-- Outputs -->
+  <rect x="780" y="90" width="240" height="120" rx="8" fill="#ffffff" stroke="#94a3b8"></rect>
+  <text x="800" y="120" font-size="14" font-family="Arial" fill="#0f172a">Results</text>
+  <text x="800" y="140" font-size="12" font-family="Arial" fill="#475569">forecasts.csv, insights.csv, emails.csv</text>
+
+  <!-- Frontend -->
+  <rect x="320" y="320" width="420" height="120" rx="8" fill="#ffffff" stroke="#7c3aed"></rect>
+  <text x="360" y="350" font-size="14" font-family="Arial" fill="#2a0a6b">Demo Frontend</text>
+  <text x="360" y="370" font-size="12" font-family="Arial" fill="#3f3d56">Streamlit / Gradio reads results/ and displays charts</text>
+
+  <!-- Arrows -->
+  <path d="M280 150 L320 150" stroke="#1f2937" stroke-width="2" marker-end="url(#arrow)"></path>
+  <path d="M740 150 L780 150" stroke="#1f2937" stroke-width="2" marker-end="url(#arrow)"></path>
+  <path d="M530 280 L530 320" stroke="#1f2937" stroke-width="2" marker-end="url(#arrow)"></path>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#0f172a"></path>
+    </marker>
+  </defs>
+
+  <!-- Labels -->
+  <text x="280" y="130" font-size="12" font-family="Arial" fill="#0f172a">Load</text>
+  <text x="660" y="130" font-size="12" font-family="Arial" fill="#0f172a">AI &amp; SQL</text>
+  <text x="520" y="300" font-size="12" font-family="Arial" fill="#0f172a">Export</text>
+</svg>

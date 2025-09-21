@@ -1,0 +1,6 @@
+call_id,summary,sentiment,priority,tags,action_items
+1,"Hi, I'm calling because my order #1234 arrived damaged. I need a replacement or refund. I bought this last week, please help.",negative,high,"[""refund"", ""replacement""]","[""Investigate billing; process refund if valid"", ""Initiate replacement/shipping""]"
+2,Hello—the device keeps rebooting after the new update. It's been two days and it's unusable. I need escalation to engineering.,negative,high,"[""update"", ""reboot""]","[""Escalate to engineering""]"
+3,I want to change my shipping address for order #5678. I submitted a change but the site still shows old address.,neutral,medium,"[""shipping"", ""address""]","[""Update shipping address""]"
+4,Great service — setup was easy but I had a question about warranty. Please confirm the warranty terms.,positive,medium,"[""warranty""]",[]
+5,My subscription renewal charged me twice. I need a refund and a confirmation that this won't happen again.,negative,high,"[""refund"", ""subscription"", ""charge""]","[""Investigate billing; process refund if valid""]"

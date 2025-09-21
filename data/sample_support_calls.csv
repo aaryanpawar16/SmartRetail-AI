@@ -1,0 +1,6 @@
+call_id,customer_id,call_text,call_timestamp
+1,101,"Hi, I'm calling because my order #1234 arrived damaged. I need a replacement or refund. I bought this last week, please help.",2025-08-10 09:12:00
+2,102,"Hello—the device keeps rebooting after the new update. It's been two days and it's unusable. I need escalation to engineering.",2025-08-11 14:20:00
+3,103,"I want to change my shipping address for order #5678. I submitted a change but the site still shows old address.",2025-08-12 11:03:00
+4,104,"Great service — setup was easy but I had a question about warranty. Please confirm the warranty terms.",2025-08-12 18:05:00
+5,105,"My subscription renewal charged me twice. I need a refund and a confirmation that this won't happen again.",2025-08-13 08:45:00

@@ -1,0 +1,1 @@
+[{"name":"customer_id","type":"INTEGER"},{"name":"email","type":"STRING"},{"name":"favorite_category","type":"STRING"},{"name":"product_name","type":"STRING"}] 

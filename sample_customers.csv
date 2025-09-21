@@ -1,0 +1,4 @@
+customer_id,email,favorite_category,product_name 
+1,alice@example.com,shoes,Sneaker X 
+2,bob@example.com,accessories,Leather Wallet 
+3,charlie@example.com,home,Compact Blender 

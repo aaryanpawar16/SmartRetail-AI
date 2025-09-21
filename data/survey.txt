@@ -1,0 +1,15 @@
+**Team Survey: BigQuery AI - Building the Future of Data**
+
+
+1) BigQuery AI:
+- Team Member 1: 6 months
+- Team Member 2: 12 months
+
+
+2) Google Cloud:
+- Team Member 1: 18 months
+- Team Member 2: 36 months
+
+
+3) Feedback:
+BigQuery AI made it straightforward to embed generative and forecasting capabilities directly into SQL which sped up our prototyping. Prompting inside SQL required some iteration. The integrated forecasting tools were very useful for rapid experiments. Documentation could use more real-world examples for `AI.GENERATE_TABLE` and `AI.FORECAST`.
