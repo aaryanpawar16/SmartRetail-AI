@@ -17,18 +17,99 @@ from sklearn.metrics.pairwise import linear_kernel
 import subprocess
 import sys
 import json
+import os
+import tempfile
+import base64
 from collections import Counter
+
+# Optional: google oauth import used for validation only (guarded)
+try:
+    from google.oauth2 import service_account
+except Exception:
+    service_account = None
 
 ROOT = Path(__file__).resolve().parents[2]
 RESULTS = ROOT / "results"
+TMP = ROOT / "tmp"
+TMP.mkdir(exist_ok=True)
 
 st.set_page_config(page_title="SmartRetail AI – Demo", layout="wide")
 st.title("SmartRetail AI — Demo")
 
-# --- Helper to run scripts safely ---
+# --- Service account helpers (Streamlit secrets) ---
+def get_sa_from_secrets():
+    """Return the service-account dict from st.secrets, or None."""
+    try:
+        sa = dict(st.secrets["gcp_service_account"])
+        return sa
+    except Exception:
+        return None
+
+def write_sa_to_temp_file(sa: dict) -> Path:
+    """
+    Write the service account dict to a temporary json file and return path.
+    Overwrites previous tmp/sa.json so the path is stable across runs.
+    """
+    out = TMP / "sa.json"
+    # If private_key contains escaped \n sequences, convert them — fallback only
+    pk = sa.get("private_key")
+    if isinstance(pk, str) and "\\n" in pk and "BEGIN" not in pk:
+        sa["private_key"] = pk.replace("\\n", "\n")
+    out.write_text(json.dumps(sa, ensure_ascii=False), encoding="utf-8")
+    return out
+
+def validate_sa(sa: dict) -> (bool, str):
+    """
+    Validate a service account dict:
+      - check private_key header/footer
+      - check base64 body decodes (padding)
+      - attempt to instantiate google oauth credentials (if library available)
+    Returns (ok, message).
+    """
+    if not sa:
+        return False, "No service account found in st.secrets['gcp_service_account']"
+    pk = sa.get("private_key")
+    if not pk or not isinstance(pk, str):
+        return False, "Missing or invalid `private_key` in service account."
+
+    lines = [ln.strip() for ln in pk.splitlines() if ln.strip() != ""]
+    if not lines:
+        return False, "private_key appears empty."
+    if not lines[0].startswith("-----BEGIN") or not lines[-1].startswith("-----END"):
+        return False, "private_key does not contain valid PEM BEGIN/END lines."
+
+    # Check base64 body
+    body_lines = [ln for ln in lines if "BEGIN" not in ln and "END" not in ln]
+    b64 = "".join(body_lines)
+    try:
+        base64.b64decode(b64, validate=True)
+    except Exception as e:
+        return False, f"Base64 decode failed: {e}"
+
+    # Try to create credentials (if library available)
+    if service_account is None:
+        return True, "PEM/base64 looks OK. (google.oauth2 not installed here, skipped credentials instantiation.)"
+    try:
+        service_account.Credentials.from_service_account_info(sa)
+        return True, "Service account JSON parsed and credentials created successfully."
+    except Exception as e:
+        return False, f"Credentials creation failed: {e}"
+
+# --- Helper to run scripts safely (passes GOOGLE_APPLICATION_CREDENTIALS) ---
 def run_script_and_report(script_path: Path):
-    """Run a Python script with the same interpreter as Streamlit, capture logs."""
+    """Run a Python script with the same interpreter as Streamlit, capture logs.
+       If st.secrets contains a GCP service account we write it to TMP/sa.json and
+       set GOOGLE_APPLICATION_CREDENTIALS for the subprocess environment so the
+       child script can authenticate.
+    """
     cmd = [sys.executable, str(script_path)]
+    env = os.environ.copy()
+
+    sa = get_sa_from_secrets()
+    if sa:
+        sa_path = write_sa_to_temp_file(sa)
+        env["GOOGLE_APPLICATION_CREDENTIALS"] = str(sa_path)
+
     try:
         result = subprocess.run(
             cmd,
@@ -37,6 +118,7 @@ def run_script_and_report(script_path: Path):
             stderr=subprocess.PIPE,
             cwd=str(ROOT),  # run from repo root
             text=True,
+            env=env,
         )
         return True, result.stdout
     except subprocess.CalledProcessError as e:
@@ -44,6 +126,16 @@ def run_script_and_report(script_path: Path):
 
 # --- Section: Run jobs ---
 st.sidebar.header("Actions")
+
+# Validate secrets button
+if st.sidebar.button("Validate GCP Secret"):
+    sa = get_sa_from_secrets()
+    ok, msg = validate_sa(sa)
+    if ok:
+        st.sidebar.success(msg)
+    else:
+        st.sidebar.error(msg)
+        st.sidebar.write("Tip: paste the service-account JSON values (not escaped) into Settings → Secrets using triple-quoted private_key block.")
 
 if st.sidebar.button("Run Forecast (AI.FORECAST)"):
     with st.spinner("Running forecast.py..."):
