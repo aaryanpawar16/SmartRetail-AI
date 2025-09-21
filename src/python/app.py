@@ -15,7 +15,7 @@ import matplotlib.pyplot as plt
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
 import subprocess
-import shlex
+import sys
 import json
 from collections import Counter
 
@@ -26,19 +26,28 @@ st.set_page_config(page_title="SmartRetail AI – Demo", layout="wide")
 st.title("SmartRetail AI — Demo")
 
 # --- Helper to run scripts safely ---
-def run_script_and_report(cmd: str):
+def run_script_and_report(script_path: Path):
+    """Run a Python script with the same interpreter as Streamlit, capture logs."""
+    cmd = [sys.executable, str(script_path)]
     try:
-        result = subprocess.run(shlex.split(cmd), check=True, capture_output=True, text=True)
+        result = subprocess.run(
+            cmd,
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            cwd=str(ROOT),  # run from repo root
+            text=True,
+        )
         return True, result.stdout
     except subprocess.CalledProcessError as e:
-        return False, e.stderr
+        return False, f"STDOUT:\n{e.stdout}\n\nSTDERR:\n{e.stderr}"
 
 # --- Section: Run jobs ---
 st.sidebar.header("Actions")
 
 if st.sidebar.button("Run Forecast (AI.FORECAST)"):
     with st.spinner("Running forecast.py..."):
-        ok, out = run_script_and_report("python src/python/forecast.py")
+        ok, out = run_script_and_report(ROOT / "src" / "python" / "forecast.py")
         if ok:
             st.sidebar.success("Forecast completed")
         else:
@@ -47,7 +56,7 @@ if st.sidebar.button("Run Forecast (AI.FORECAST)"):
 
 if st.sidebar.button("Run Personalize (generate emails)"):
     with st.spinner("Running personalize.py..."):
-        ok, out = run_script_and_report("python src/python/personalize.py")
+        ok, out = run_script_and_report(ROOT / "src" / "python" / "personalize.py")
         if ok:
             st.sidebar.success("Personalization completed")
         else:
@@ -56,7 +65,7 @@ if st.sidebar.button("Run Personalize (generate emails)"):
 
 if st.sidebar.button("Run Extract Insights (support calls)"):
     with st.spinner("Running extract_insights.py..."):
-        ok, out = run_script_and_report("python src/python/extract_insights.py")
+        ok, out = run_script_and_report(ROOT / "src" / "python" / "extract_insights.py")
         if ok:
             st.sidebar.success("Support call insights completed")
         else:
@@ -75,7 +84,6 @@ if forecast_file.exists():
         st.subheader("Raw forecast table")
         st.dataframe(df)
 
-        # plot forecast with CI
         st.subheader("Forecast chart (with 95% CI)")
         fig, ax = plt.subplots(figsize=(8, 4))
         df_sorted = df.sort_values("forecast_timestamp")
@@ -106,12 +114,11 @@ if emails_file.exists():
         st.subheader("Sample personalized emails")
         st.dataframe(emails_df.head())
 
-        # show as cards
         st.subheader("Email preview cards")
         for _, row in emails_df.head(10).iterrows():
             with st.container():
-                st.markdown(f"**Customer ID:** {row.get('customer_id', '')}  ")
-                st.markdown(f"**Email:** {row.get('email', '')}  ")
+                st.markdown(f"**Customer ID:** {row.get('customer_id', '')}")
+                st.markdown(f"**Email:** {row.get('email', '')}")
                 st.markdown(f"**Draft:**  \n\n{row.get('marketing_email','')}")
                 st.markdown("---")
     except Exception as e:
