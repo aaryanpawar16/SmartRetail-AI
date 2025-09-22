@@ -1,0 +1,13 @@
+Feedback on BigQuery AI
+
+Ease of use: The built-in AI functions (AI.FORECAST, AI.GENERATE, AI.GENERATE_TABLE) make it possible to perform advanced ML tasks directly in SQL without leaving BigQuery. This was highly valuable for rapid prototyping.
+
+Strengths: Integration with structured + unstructured data, fast iteration, and being able to keep all workflows within the warehouse.
+
+Challenges:
+
+Authentication setup (service accounts in Streamlit Cloud) required extra effort.
+
+Limited documentation/examples for some newer AI functions, which meant some trial-and-error with queries.
+
+Overall impression: BigQuery AI is a powerful step toward warehouse-native AI. With better documentation and smoother cloud-native authentication, it can become a go-to platform for AI-powered data apps.
