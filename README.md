@@ -54,7 +54,8 @@ export GOOGLE_APPLICATION_CREDENTIALS="key.json"
 4. Run Demo
 streamlit run src/python/app.py
 
-🖥️ Demo Screens
+🖥️ Demo Screens:
+
 Forecast chart with confidence intervals
 
 Personalized email previews
