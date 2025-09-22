@@ -16,23 +16,6 @@ The result:
 
 All orchestrated in a **single Streamlit demo app**, powered directly from BigQuery.  
 
----
-
-## 🏗️ Architecture
-
-```mermaid
-flowchart TD
-    A[Sales Data + Support Logs + Customer Info] -->|Ingest| B[BigQuery Dataset]
-
-    B -->|AI.FORECAST| C[Forecasts]
-    B -->|AI.GENERATE| D[Personalized Emails]
-    B -->|AI.GENERATE_TABLE| E[Support Call Insights]
-
-    C --> F[Streamlit App]
-    D --> F
-    E --> F
-
-    F --> G[End Users: Retail Teams / Executives]
 ⚙️ Tech Stack
 BigQuery AI Functions
 
