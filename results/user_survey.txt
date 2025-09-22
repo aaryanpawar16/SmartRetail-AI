@@ -1,0 +1,16 @@
+BigQuery AI Hackathon — User Survey
+
+1. Please tell us how many months of experience with BigQuery AI each team member has.
+   - Team Member 1 (Aaryan Pawar): 2 months
+   - (If solo project, leave only your name.)
+
+2. Please tell us how many months of experience with Google Cloud each team member has.
+   - Team Member 1 (Aaryan Pawar): 3 months
+
+3. We’d love to hear from you and your experience in working with the technology during this hackathon, positive or negative. Please provide any feedback on your experience with BigQuery AI.
+   - BigQuery AI functions like `AI.FORECAST`, `AI.GENERATE_TABLE`, and `ML.GENERATE_TEXT` were surprisingly easy to use directly in SQL, which helped us build a full pipeline inside BigQuery without exporting data.
+   - The integration with Python via the BigQuery client library was smooth once credentials were set up.
+   - The biggest challenge was handling authentication (service account keys in Streamlit Cloud), and understanding the differences between `ML.GENERATE_TEXT` vs. `AI.GENERATE` syntax.
+   - Once those were solved, the workflow was very powerful: we could generate personalized emails, forecasts, and extract insights from unstructured support-call text with minimal additional ML code.
+   - Overall, this hackathon gave us a practical understanding of how to combine structured + unstructured data in BigQuery AI, and we see strong potential for applying it to real-world retail analytics.
+
