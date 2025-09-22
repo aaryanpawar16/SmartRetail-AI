@@ -53,6 +53,7 @@ Then set:
 export GOOGLE_APPLICATION_CREDENTIALS="key.json"
 4. Run Demo
 streamlit run src/python/app.py
+
 🖥️ Demo Screens
 Forecast chart with confidence intervals
 
